@@ -2,7 +2,7 @@ package test
 
 import (
 	"context"
-	"github.com/lobkovilya/healsendbox/sandbox"
+	"github.com/lobkovilya/healsandbox/sandbox"
 	. "github.com/onsi/gomega"
 	"github.com/sirupsen/logrus"
 	"testing"

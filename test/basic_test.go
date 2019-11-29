@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/lobkovilya/healsendbox/sandbox"
+	"github.com/lobkovilya/healsandbox/sandbox"
 	. "github.com/onsi/gomega"
 	"testing"
 )

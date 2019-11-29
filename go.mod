@@ -1,4 +1,4 @@
-module github.com/lobkovilya/healsendbox
+module github.com/lobkovilya/healsandbox
 
 go 1.13
 

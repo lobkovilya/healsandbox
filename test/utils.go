@@ -3,7 +3,7 @@ package test
 import (
 	"context"
 	"fmt"
-	"github.com/lobkovilya/healsendbox/sandbox"
+	"github.com/lobkovilya/healsandbox/sandbox"
 	"github.com/sirupsen/logrus"
 	"sync"
 )
