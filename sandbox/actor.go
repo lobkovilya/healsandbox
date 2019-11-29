@@ -1,4 +1,4 @@
-package actor
+package sandbox
 
 import (
 	"fmt"
@@ -64,7 +64,7 @@ type actor struct {
 	killed bool
 }
 
-func New(meta Meta, router Router) Actor {
+func NewActor(meta Meta, router Router) Actor {
 	rv := &actor{
 		Meta:   meta,
 		router: router,
@@ -91,7 +91,7 @@ func (a *actor) Request(request Request) (Connection, error) {
 
 	a.log(fmt.Sprintf("request accepted: %v", request))
 	if a.killed {
-		return Connection{}, fmt.Errorf("actor '%s' is dead", a.ID)
+		return Connection{}, fmt.Errorf("sandbox '%s' is dead", a.ID)
 	}
 
 	if cw, err := a.Get(request.ConnectionID); err == nil {

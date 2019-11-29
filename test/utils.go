@@ -3,18 +3,18 @@ package test
 import (
 	"context"
 	"fmt"
-	"github.com/lobkovilya/healsendbox/actor"
+	"github.com/lobkovilya/healsendbox/sandbox"
 	"github.com/sirupsen/logrus"
 	"sync"
 )
 
-type forEach []actor.Actor
+type forEach []sandbox.Actor
 
-func single(a actor.Actor) []actor.Actor {
-	return []actor.Actor{a}
+func single(a sandbox.Actor) []sandbox.Actor {
+	return []sandbox.Actor{a}
 }
 
-func list(actors ...actor.Actor) []actor.Actor {
+func list(actors ...sandbox.Actor) []sandbox.Actor {
 	return actors
 }
 
@@ -78,7 +78,7 @@ func (f forEach) WaitClosed(ctx context.Context, connId string) error {
 		go func() {
 			monitor := a.Monitor()
 			for event := range monitor {
-				if event.EventType != actor.Delete {
+				if event.EventType != sandbox.Delete {
 					continue
 				}
 
@@ -104,7 +104,7 @@ func (f forEach) WaitClosed(ctx context.Context, connId string) error {
 	return nil
 }
 
-func (f forEach) WaitConnectionState(connID string, state actor.HealState) {
+func (f forEach) WaitConnectionState(connID string, state sandbox.HealState) {
 	var wg sync.WaitGroup
 
 	for i := 0; i < len(f); i++ {
@@ -115,7 +115,7 @@ func (f forEach) WaitConnectionState(connID string, state actor.HealState) {
 
 			monitor := a.Monitor()
 			for event := range monitor {
-				if event.EventType == actor.Delete {
+				if event.EventType == sandbox.Delete {
 					continue
 				}
 
@@ -129,7 +129,7 @@ func (f forEach) WaitConnectionState(connID string, state actor.HealState) {
 	}
 }
 
-func (f forEach) FindByID(id string) actor.Actor {
+func (f forEach) FindByID(id string) sandbox.Actor {
 	for i := 0; i < len(f); i++ {
 		if f[i].GetMeta().ID == id {
 			return f[i]
@@ -146,18 +146,18 @@ func (f forEach) PrintState() {
 	}
 }
 
-func actorsChain(router actor.Router, meta ...actor.Meta) []actor.Actor {
-	actors := make([]actor.Actor, 0, len(meta))
+func actorsChain(router sandbox.Router, meta ...sandbox.Meta) []sandbox.Actor {
+	actors := make([]sandbox.Actor, 0, len(meta))
 
 	for _, m := range meta {
-		actors = append(actors, actor.New(m, router))
+		actors = append(actors, sandbox.NewActor(m, router))
 	}
 
 	return actors
 }
 
-func newNSC(id, node string) actor.Meta {
-	return actor.Meta{
+func newNSC(id, node string) sandbox.Meta {
+	return sandbox.Meta{
 		ID:            id,
 		Node:          node,
 		Class:         "nsc",
@@ -165,8 +165,8 @@ func newNSC(id, node string) actor.Meta {
 	}
 }
 
-func newNSE(id, node string) actor.Meta {
-	return actor.Meta{
+func newNSE(id, node string) sandbox.Meta {
+	return sandbox.Meta{
 		ID:            id,
 		Node:          node,
 		Class:         "nse",
@@ -174,8 +174,8 @@ func newNSE(id, node string) actor.Meta {
 	}
 }
 
-func newNSMgr(node string) actor.Meta {
-	return actor.Meta{
+func newNSMgr(node string) sandbox.Meta {
+	return sandbox.Meta{
 		ID:            fmt.Sprintf("nsmgr-%s", node),
 		Node:          node,
 		Class:         "nsmgr",
@@ -183,8 +183,8 @@ func newNSMgr(node string) actor.Meta {
 	}
 }
 
-func newForwarder(id, node string) actor.Meta {
-	return actor.Meta{
+func newForwarder(id, node string) sandbox.Meta {
+	return sandbox.Meta{
 		ID:            id,
 		Node:          node,
 		Class:         "forwarder",

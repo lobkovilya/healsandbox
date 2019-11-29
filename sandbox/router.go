@@ -1,4 +1,4 @@
-package actor
+package sandbox
 
 import (
 	"fmt"

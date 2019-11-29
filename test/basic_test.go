@@ -1,7 +1,7 @@
 package test
 
 import (
-	"github.com/lobkovilya/healsendbox/actor"
+	"github.com/lobkovilya/healsendbox/sandbox"
 	. "github.com/onsi/gomega"
 	"testing"
 )
@@ -12,7 +12,7 @@ import (
 func TestBasic_ConnectionEstablished(t *testing.T) {
 	g := NewWithT(t)
 
-	router := actor.NewRouter()
+	router := sandbox.NewRouter()
 	actors := actorsChain(router,
 		newNSC("nsc-1", "master"),
 		newNSMgr("master"),
@@ -23,7 +23,7 @@ func TestBasic_ConnectionEstablished(t *testing.T) {
 
 	forEach(actors).WaitRegistered()
 
-	resp, err := actors[0].Request(actor.Request{
+	resp, err := actors[0].Request(sandbox.Request{
 		ConnectionID: "conn-id",
 		Route: []string{
 			"nsc",
@@ -41,7 +41,7 @@ func TestBasic_ConnectionEstablished(t *testing.T) {
 func TestBasic_HealFailed(t *testing.T) {
 	g := NewWithT(t)
 
-	router := actor.NewRouter()
+	router := sandbox.NewRouter()
 	actors := actorsChain(router,
 		newNSC("nsc-1", "master"),
 		newNSMgr("master"),
@@ -51,7 +51,7 @@ func TestBasic_HealFailed(t *testing.T) {
 	defer join()
 	forEach(actors).WaitRegistered()
 
-	resp, err := actors[0].Request(actor.Request{
+	resp, err := actors[0].Request(sandbox.Request{
 		ConnectionID: "conn-id",
 		Route: []string{
 			"nsc",

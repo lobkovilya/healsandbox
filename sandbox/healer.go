@@ -1,4 +1,4 @@
-package actor
+package sandbox
 
 import (
 	"fmt"
@@ -181,7 +181,7 @@ func (c *CloseHealer) Healing(cw *ConnectionWrapper) {
 		close(cw.resetWaitSrcCh)
 	}
 
-	// TODO: some logic where we should decide do we need to 'next' actor
+	// TODO: some logic where we should decide do we need to 'next' sandbox
 
 	if cw.next == nil {
 		return
